@@ -1,0 +1,23 @@
+import { LitElement, html, css } from "lit";
+import { customElement, property, state } from "lit/decorators.js";
+
+@customElement("my-component")
+export class MyComponent extends LitElement {
+  static styles = css`
+    .selector {
+      style: none;
+    }
+  `;
+
+  @property() someProperty = 0;
+  @state() private someState = 0;
+
+  connectedCallback() {
+    super.connectedCallback();
+  }
+
+  render() {
+    const total = this.someProperty + this.someState;
+    return html` <div>"The total is ${total}"</div> `;
+  }
+}
