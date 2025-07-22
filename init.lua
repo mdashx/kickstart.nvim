@@ -219,6 +219,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'make',
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.tabstop = 4
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -1021,3 +1031,52 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+--
+--
+--
+-- This command adds a new note with today's date and an auto-incrementing counter counter
+-- e.g. 2020-04-04-1.md and then if that file already exists it creates 2020-04-04-2.md
+vim.api.nvim_create_user_command('NewNote', function()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local dir
+
+  if buf_path == '' then
+    dir = vim.fn.getcwd() -- fallback to current working directory
+  else
+    dir = vim.fn.fnamemodify(buf_path, ':h')
+  end
+
+  local date = os.date '%Y-%m-%d'
+  local i = 1
+  local filename
+
+  repeat
+    filename = string.format('%s/%s-%d.md', dir, date, i)
+    i = i + 1
+  until vim.fn.filereadable(filename) == 0
+
+  vim.cmd('edit ' .. filename)
+end, {})
+
+vim.keymap.set('n', '<leader>nn', '<cmd>NewNote<CR>', { desc = 'Create new note' })
+
+vim.api.nvim_create_user_command('NewFile', function()
+  local buf_path = vim.api.nvim_buf_get_name(0)
+  local base_dir = buf_path ~= '' and vim.fn.fnamemodify(buf_path, ':h') or vim.fn.getcwd()
+
+  local filename = vim.fn.input 'Filename (relative to current buffer dir): '
+  if filename == '' then
+    print 'No filename provided.'
+    return
+  end
+
+  local full_path = base_dir .. '/' .. filename
+  vim.cmd('edit ' .. full_path)
+end, {
+  desc = 'Prompt for filename and open it in sibling or working directory',
+})
+
+vim.keymap.set('n', '<leader>nf', function()
+  vim.cmd 'NewFile'
+end, { desc = 'Create arbitrary file with prompt' })
