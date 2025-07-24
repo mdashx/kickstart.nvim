@@ -1082,3 +1082,12 @@ end, {
 vim.keymap.set('n', '<leader>nf', function()
   vim.cmd 'NewFile'
 end, { desc = 'Create arbitrary file with prompt' })
+
+local function insert_date()
+  local date = os.date('%Y-%m-%d' .. '  ')
+  vim.api.nvim_put({ date }, 'c', true, true)
+end
+
+vim.api.nvim_create_user_command('InsertDate', insert_date, {})
+
+vim.keymap.set('n', 'nd', insert_date, { desc = "Insert today's date" })
