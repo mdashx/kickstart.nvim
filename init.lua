@@ -15,7 +15,7 @@
 ========         `"")----------------(""`   ___________      ========
 ========        /::::::::::|  |::::::::::\  \ no mouse \     ========
 ========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
+=======      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
 ========                                                     ========
 =====================================================================
 =====================================================================
@@ -390,6 +390,7 @@ require('lazy').setup({
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
+      { 'benfowler/telescope-luasnip.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
@@ -853,6 +854,10 @@ require('lazy').setup({
           },
         },
         opts = {},
+        config = function()
+          require('telescope').setup {}
+          require('telescope').load_extension 'luasnip'
+        end,
       },
       'folke/lazydev.nvim',
     },
@@ -1115,6 +1120,8 @@ vim.api.nvim_create_user_command('NewNote', function()
 
   vim.cmd('edit ' .. filename)
 end, {})
+
+vim.keymap.set('n', '<leader>sp', '<cmd>Telescope luasnip<CR>', { desc = 'Search sni[p]pets' })
 
 vim.keymap.set('n', '<leader>nn', '<cmd>NewNote<CR>', { desc = 'Create new note' })
 
