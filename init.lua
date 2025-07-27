@@ -694,8 +694,35 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = { 'ts_ls' },
+        -- ts_ls = { 'ts_ls' },
+
+        ts_ls = {},
+        vue_ls = {},
+        -- ts_ls = {
+        --   filetypes = {
+        --     'javascript',
+        --     'typescript',
+        --     'vue',
+        --   },
+        -- },
         --
+        --
+        -- vim.lsp.config('ts_ls', {
+        --   init_options = {
+        --     plugins = {
+        --       {
+        --         name = "@vue/typescript-plugin",
+        --         location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+        --         languages = {"javascript", "typescript", "vue"},
+        --       },
+        --     },
+        --   },
+        --   filetypes = {
+        --     "javascript",
+        --     "typescript",
+        --     "vue",
+        --   },
+        -- })
 
         lua_ls = {
           -- cmd = { ... },
@@ -1034,6 +1061,34 @@ require('lazy').setup({
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 --
+
+vim.lsp.config('ts_ls', {
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = '/home/tom/.npm-global/lib/node_modules/@vue/typescript-plugin',
+        languages = { 'javascript', 'typescript', 'vue' },
+      },
+    },
+  },
+  filetypes = {
+    'javascript',
+    'typescript',
+    'vue',
+  },
+})
+
+-- vim.lsp.config('vue_ls', {
+--   -- add filetypes for typescript, javascript and vue
+--   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+--   init_options = {
+--     vue = {
+--       -- disable hybrid mode
+--       hybridMode = false,
+--     },
+--   },
+-- })
 --
 --
 --
