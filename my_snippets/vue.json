@@ -1,0 +1,13 @@
+{
+  "Base Layout Template": {
+    "prefix": "base-layout",
+    "body": [
+      "<template>",
+      "  <BaseLayout title=\"$1\">",
+      "    $0",
+      "  </BaseLayout>",
+      "</template>"
+    ],
+    "description": "BaseLayout component template"
+  }
+}
