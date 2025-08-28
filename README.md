@@ -1,3 +1,28 @@
+# Fix issues with Vue
+
+Make sure the `@vue/typescript-plugin` package is installed in the correct path:
+
+```
+vim.lsp.config('ts_ls', {
+  init_options = {
+    plugins = {
+      {
+        name = '@vue/typescript-plugin',
+        location = '/home/tom/.npm-global/lib/node_modules/@vue/typescript-plugin',
+        languages = { 'javascript', 'typescript', 'vue' },
+      },
+    },
+  },
+  filetypes = {
+    'javascript',
+    'typescript',
+    'vue',
+  },
+})
+
+```
+
+
 # kickstart.nvim
 
 ## Introduction

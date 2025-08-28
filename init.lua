@@ -698,6 +698,7 @@ require('lazy').setup({
         -- ts_ls = { 'ts_ls' },
 
         ts_ls = {},
+        vtsls = {},
         vue_ls = {},
         -- ts_ls = {
         --   filetypes = {
